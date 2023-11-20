@@ -1,0 +1,1 @@
+Audio synthesizer library for Android.
