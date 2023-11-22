@@ -17,4 +17,3 @@ This is an Audio synthesizer library for Android. It can genrate sine waves. It 
 ## Links
 
 developer website: [https://hardcodedjoy.com](https://hardcodedjoy.com)<br/>
-app page: [https://hardcodedjoy.com/app-details?id=com.hardcodedjoy.noisoid](https://hardcodedjoy.com/app-details?id=com.hardcodedjoy.noisoid)<br/>
