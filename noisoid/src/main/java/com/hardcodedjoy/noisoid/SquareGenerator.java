@@ -26,9 +26,9 @@ SOFTWARE.
 
 package com.hardcodedjoy.noisoid;
 
-public class SineGenerator extends Source {
+public class SquareGenerator extends Source {
 
-    public SineGenerator(int sampleRate, float frequency) {
+    public SquareGenerator(int sampleRate, float frequency) {
         this.sampleRate = sampleRate;
         this.k = TWO_PI * frequency / sampleRate;
     }
@@ -36,6 +36,11 @@ public class SineGenerator extends Source {
     @Override
     protected float getNextSample() {
         float res = (float) Math.sin(alpha);
+
+        // make square:
+        if(res > 0) { res = 1.0f; }
+        else { res = -1.0f; }
+
         alpha += k;
         if(alpha > TWO_PI) { alpha -= TWO_PI; }
         return res;

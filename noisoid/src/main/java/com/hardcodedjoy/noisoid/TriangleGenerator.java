@@ -26,16 +26,32 @@ SOFTWARE.
 
 package com.hardcodedjoy.noisoid;
 
-public class SineGenerator extends Source {
+public class TriangleGenerator extends Source {
 
-    public SineGenerator(int sampleRate, float frequency) {
+    public TriangleGenerator(int sampleRate, float frequency) {
         this.sampleRate = sampleRate;
         this.k = TWO_PI * frequency / sampleRate;
     }
 
     @Override
     protected float getNextSample() {
-        float res = (float) Math.sin(alpha);
+
+        float res;
+
+        if(alpha < PI) {
+            // alpha = 0 .. PI
+            // alpha / PI = 0 .. 1
+            // 2*(alpha / PI) - 1 = -1 .. 1
+            res = (float) (2 * (alpha / PI));
+        } else {
+            // alpha = PI .. TWO_PI
+            // alpha - PI = 0 .. PI
+            // (alpha - PI) / PI = 0 .. 1
+            // (PI - alpha) / PI = 0 .. -1
+            // 2 * (PI - alpha) / PI + 1 = 1 .. -1
+            res = (float) (2 * (PI - alpha) / PI + 1);
+        }
+
         alpha += k;
         if(alpha > TWO_PI) { alpha -= TWO_PI; }
         return res;

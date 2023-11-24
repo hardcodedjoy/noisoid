@@ -26,16 +26,22 @@ SOFTWARE.
 
 package com.hardcodedjoy.noisoid;
 
-public class SineGenerator extends Source {
+public class SawtoothGeneratorDesc extends Source {
 
-    public SineGenerator(int sampleRate, float frequency) {
+    public SawtoothGeneratorDesc(int sampleRate, float frequency) {
         this.sampleRate = sampleRate;
         this.k = TWO_PI * frequency / sampleRate;
     }
 
     @Override
     protected float getNextSample() {
-        float res = (float) Math.sin(alpha);
+
+        // alpha = 0 .. TWO_PI
+        // alpha / TWO_PI = 0 .. 1
+        // 2*(alpha / TWO_PI) - 1 = -1 .. 1
+
+        float res = -(float) (2 * (alpha / TWO_PI)); // added "-" for descending sawtooth
+
         alpha += k;
         if(alpha > TWO_PI) { alpha -= TWO_PI; }
         return res;

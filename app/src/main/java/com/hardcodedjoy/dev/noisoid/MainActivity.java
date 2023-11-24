@@ -31,9 +31,16 @@ import android.os.Bundle;
 import android.view.Window;
 
 import com.hardcodedjoy.noisoid.Noisoid;
+import com.hardcodedjoy.noisoid.SawtoothGeneratorAsc;
+import com.hardcodedjoy.noisoid.SawtoothGeneratorDesc;
 import com.hardcodedjoy.noisoid.SineGenerator;
+import com.hardcodedjoy.noisoid.Source;
+import com.hardcodedjoy.noisoid.SquareGenerator;
+import com.hardcodedjoy.noisoid.TriangleGenerator;
 
 public class MainActivity extends Activity {
+
+    private Source source;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,18 +53,90 @@ public class MainActivity extends Activity {
         Noisoid noisoid = new Noisoid(48000, 10);
         noisoid.start();
 
-        SineGenerator source = new SineGenerator(48000, 440);
-        source.setVolume(0.8f, 0.8f);
+        long delay = 100;
 
-        int id = source.getId();
+        runDelayed(() -> {
+            source = new SineGenerator(48000, 440);
+            source.setVolume(0.8f, 0.8f);
+            noisoid.addSource(source);
+        }, delay);
+        delay += 1000;
 
-        noisoid.addSource(source);
+        runDelayed(() -> {
+            noisoid.removeSource(source.getId());
+            source = new TriangleGenerator(48000, 440);
+            source.setVolume(0.8f, 0.8f);
+            noisoid.addSource(source);
+        }, delay);
+        delay += 1000;
 
+        runDelayed(() -> {
+            noisoid.removeSource(source.getId());
+            source = new SawtoothGeneratorAsc(48000, 440);
+            source.setVolume(0.8f, 0.8f);
+            noisoid.addSource(source);
+        }, delay);
+        delay += 1000;
+
+        runDelayed(() -> {
+            noisoid.removeSource(source.getId());
+            source = new SawtoothGeneratorDesc(48000, 440);
+            source.setVolume(0.8f, 0.8f);
+            noisoid.addSource(source);
+        }, delay);
+        delay += 1000;
+
+        runDelayed(() -> {
+            noisoid.removeSource(source.getId());
+            source = new SquareGenerator(48000, 440);
+            source.setVolume(0.8f, 0.8f);
+            noisoid.addSource(source);
+        }, delay);
+        delay += 1000;
+
+        runDelayed(() -> noisoid.removeSource(source.getId()), delay);
+        delay += 500;
+
+
+
+        runDelayed(() -> {
+            noisoid.removeSource(source.getId());
+            source = new SquareGenerator(48000, 440.00f);
+            source.setVolume(0.8f, 0.8f);
+            noisoid.addSource(source);
+        }, delay);
+        delay += 100;
+
+        runDelayed(() -> source.setFrequency(493.88f), delay);
+        delay += 100;
+
+        runDelayed(() -> source.setFrequency(523.25f), delay);
+        delay += 100;
+
+        runDelayed(() -> source.setFrequency(587.33f), delay);
+        delay += 100;
+
+        runDelayed(() -> source.setFrequency(659.25f), delay);
+        delay += 100;
+
+        runDelayed(() -> source.setFrequency(698.45f), delay);
+        delay += 100;
+
+        runDelayed(() -> source.setFrequency(783.99f), delay);
+        delay += 100;
+
+        runDelayed(() -> {
+            noisoid.removeSource(source.getId());
+            noisoid.stop();
+        }, delay);
+    }
+
+    static private void runDelayed(Runnable r, long delay) {
         new Thread() {
             @Override
             public void run() {
-                try { Thread.sleep(1000); } catch (Exception e) { /**/ }
-                noisoid.removeSource(id);
+                try { Thread.sleep(delay); } catch (Exception e) { /**/ }
+                r.run();
             }
         }.start();
     }
