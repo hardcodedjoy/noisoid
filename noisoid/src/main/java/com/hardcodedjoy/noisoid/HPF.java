@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+/*
+
 MIT License
 
-Copyright © 2023 HARDCODED JOY S.R.L. (https://hardcodedjoy.com)
+Copyright © 2024 HARDCODED JOY S.R.L. (https://hardcodedjoy.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,30 +22,28 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
--->
+*/
 
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:left="5dp"
-        android:right="5dp"
-        android:bottom="5dp"
-        android:top="5dp">
+package com.hardcodedjoy.noisoid;
 
-        <shape android:shape="rectangle" >
-            <corners
-                android:bottomLeftRadius="2dp"
-                android:bottomRightRadius="2dp"
-                android:topLeftRadius="2dp"
-                android:topRightRadius="2dp"/>
-            <padding
-                android:top="10dp"
-                android:bottom="10dp"
-                android:left="12dp"
-                android:right="12dp"/>
-            <stroke
-                android:width="1dp"
-                android:color="#00000000" />
-            <solid android:color="?android:colorFocusedHighlight" />
-        </shape>
-    </item>
-</layer-list>
+@SuppressWarnings("unused")
+public class HPF {
+	
+	private LPF lpf;
+	private final float cutoff;
+	
+	public HPF(float sampleRate, float cutoff) {
+		this.cutoff = cutoff;
+		if(cutoff == 0) { return; }
+		lpf = new LPF(sampleRate, cutoff);
+	}
+	
+	public float filter(float x) {
+		if(cutoff == 0) { return x; }
+		return x - lpf.filter(x);
+	}
+	
+	public void settle() { if(lpf != null) { lpf.settle(); } }
+	
+	public float getCutoff() { return cutoff; }
+}

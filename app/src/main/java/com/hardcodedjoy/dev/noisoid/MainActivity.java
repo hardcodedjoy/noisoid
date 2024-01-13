@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright © 2023 HARDCODED JOY S.R.L. (https://hardcodedjoy.com)
+Copyright © 2024 HARDCODED JOY S.R.L. (https://hardcodedjoy.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -26,118 +26,19 @@ SOFTWARE.
 
 package com.hardcodedjoy.dev.noisoid;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.view.Window;
-
+import com.hardcodedjoy.appbase.Settings;
+import com.hardcodedjoy.appbase.activity.SingleActivity;
+import com.hardcodedjoy.appbase.contentview.CvAboutBase;
+import com.hardcodedjoy.appbase.contentview.CvSettingsBase;
+import com.hardcodedjoy.appbase.contentview.CvTM;
 import com.hardcodedjoy.noisoid.Noisoid;
-import com.hardcodedjoy.noisoid.SawtoothGeneratorAsc;
-import com.hardcodedjoy.noisoid.SawtoothGeneratorDesc;
-import com.hardcodedjoy.noisoid.SineGenerator;
-import com.hardcodedjoy.noisoid.Source;
-import com.hardcodedjoy.noisoid.SquareGenerator;
-import com.hardcodedjoy.noisoid.TriangleGenerator;
 
-public class MainActivity extends Activity {
-
-    private Source source;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        // we use our own title bar in "layout_main"
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_main);
-
-        Noisoid noisoid = new Noisoid(48000, 10);
-        noisoid.start();
-
-        long delay = 100;
-
-        runDelayed(() -> {
-            source = new SineGenerator(48000, 440);
-            source.setVolume(0.8f, 0.8f);
-            noisoid.addSource(source);
-        }, delay);
-        delay += 1000;
-
-        runDelayed(() -> {
-            noisoid.removeSource(source.getId());
-            source = new TriangleGenerator(48000, 440);
-            source.setVolume(0.8f, 0.8f);
-            noisoid.addSource(source);
-        }, delay);
-        delay += 1000;
-
-        runDelayed(() -> {
-            noisoid.removeSource(source.getId());
-            source = new SawtoothGeneratorAsc(48000, 440);
-            source.setVolume(0.8f, 0.8f);
-            noisoid.addSource(source);
-        }, delay);
-        delay += 1000;
-
-        runDelayed(() -> {
-            noisoid.removeSource(source.getId());
-            source = new SawtoothGeneratorDesc(48000, 440);
-            source.setVolume(0.8f, 0.8f);
-            noisoid.addSource(source);
-        }, delay);
-        delay += 1000;
-
-        runDelayed(() -> {
-            noisoid.removeSource(source.getId());
-            source = new SquareGenerator(48000, 440);
-            source.setVolume(0.8f, 0.8f);
-            noisoid.addSource(source);
-        }, delay);
-        delay += 1000;
-
-        runDelayed(() -> noisoid.removeSource(source.getId()), delay);
-        delay += 500;
-
-
-
-        runDelayed(() -> {
-            noisoid.removeSource(source.getId());
-            source = new SquareGenerator(48000, 440.00f);
-            source.setVolume(0.8f, 0.8f);
-            noisoid.addSource(source);
-        }, delay);
-        delay += 100;
-
-        runDelayed(() -> source.setFrequency(493.88f), delay);
-        delay += 100;
-
-        runDelayed(() -> source.setFrequency(523.25f), delay);
-        delay += 100;
-
-        runDelayed(() -> source.setFrequency(587.33f), delay);
-        delay += 100;
-
-        runDelayed(() -> source.setFrequency(659.25f), delay);
-        delay += 100;
-
-        runDelayed(() -> source.setFrequency(698.45f), delay);
-        delay += 100;
-
-        runDelayed(() -> source.setFrequency(783.99f), delay);
-        delay += 100;
-
-        runDelayed(() -> {
-            noisoid.removeSource(source.getId());
-            noisoid.stop();
-        }, delay);
-    }
-
-    static private void runDelayed(Runnable r, long delay) {
-        new Thread() {
-            @Override
-            public void run() {
-                try { Thread.sleep(delay); } catch (Exception e) { /**/ }
-                r.run();
-            }
-        }.start();
+public class MainActivity extends SingleActivity {
+    static {
+        setInitialCvClass(CvMain.class);
+        setSettingsClass(Settings.class);
+        CvTM.setSettingsCvClass(CvSettingsBase.class);
+        CvAboutBase.setAppVersion(BuildConfig.VERSION_NAME, BuildConfig.TIMESTAMP);
+        CvAboutBase.addInfoAboutOpenSourceLib(Noisoid.about());
     }
 }

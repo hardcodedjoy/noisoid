@@ -2,7 +2,7 @@
 <!--
 MIT License
 
-Copyright © 2023 HARDCODED JOY S.R.L. (https://hardcodedjoy.com)
+Copyright © 2024 HARDCODED JOY S.R.L. (https://hardcodedjoy.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,29 +24,17 @@ SOFTWARE.
 
 -->
 
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:state_enabled="true"
-        android:state_pressed="false"
-        android:state_focused="false"
-        android:drawable="@drawable/btn_normal"/>
-    <item
-        android:state_enabled="false"
-        android:state_pressed="false"
-        android:state_focused="false"
-        android:drawable="@drawable/btn_disabled"/>
-    <item
-        android:state_enabled="true"
-        android:state_pressed="true"
-        android:drawable="@drawable/btn_pressed"/>
-    <item
-        android:state_enabled="true"
-        android:state_pressed="false"
-        android:state_focused="true"
-        android:drawable="@drawable/btn_focused"/>
-    <item
-        android:state_enabled="false"
-        android:state_pressed="false"
-        android:state_focused="true"
-        android:drawable="@drawable/btn_disabled_focused"/>
-</selector>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/text_explain" />
+
+</LinearLayout>
