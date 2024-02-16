@@ -38,6 +38,7 @@ import com.hardcodedjoy.noisoid.SineGenerator;
 import com.hardcodedjoy.noisoid.Source;
 import com.hardcodedjoy.noisoid.SquareGenerator;
 import com.hardcodedjoy.noisoid.TriangleGenerator;
+import com.hardcodedjoy.noisoid.WhiteNoiseGenerator;
 
 @SuppressLint("ViewConstructor")
 public class CvMain extends CvTMLL {
@@ -47,8 +48,8 @@ public class CvMain extends CvTMLL {
     public CvMain() {
         // add initialization code here (that must run only one time)
 
-        LinearLayout llContent = findViewById(R.id.ll_content);
-        inflate(getActivity(), R.layout.main, llContent);
+        LinearLayout ll = findViewById(R.id.appbase_ll_content);
+        inflate(getActivity(), R.layout.main, ll);
 
         Noisoid noisoid = new Noisoid(48000, 10);
         noisoid.start();
@@ -57,7 +58,7 @@ public class CvMain extends CvTMLL {
 
         runDelayed(() -> {
             source = new SineGenerator(48000, 440);
-            source.setVolume(0.8f, 0.8f);
+            source.setAmplitude(0.8f, 0.8f);
             noisoid.addSource(source);
         }, delay);
         delay += 1000;
@@ -65,7 +66,7 @@ public class CvMain extends CvTMLL {
         runDelayed(() -> {
             noisoid.removeSource(source.getId());
             source = new TriangleGenerator(48000, 440);
-            source.setVolume(0.8f, 0.8f);
+            source.setAmplitude(0.8f, 0.8f);
             noisoid.addSource(source);
         }, delay);
         delay += 1000;
@@ -73,7 +74,7 @@ public class CvMain extends CvTMLL {
         runDelayed(() -> {
             noisoid.removeSource(source.getId());
             source = new SawtoothGeneratorAsc(48000, 440);
-            source.setVolume(0.8f, 0.8f);
+            source.setAmplitude(0.8f, 0.8f);
             noisoid.addSource(source);
         }, delay);
         delay += 1000;
@@ -81,7 +82,7 @@ public class CvMain extends CvTMLL {
         runDelayed(() -> {
             noisoid.removeSource(source.getId());
             source = new SawtoothGeneratorDesc(48000, 440);
-            source.setVolume(0.8f, 0.8f);
+            source.setAmplitude(0.8f, 0.8f);
             noisoid.addSource(source);
         }, delay);
         delay += 1000;
@@ -89,7 +90,15 @@ public class CvMain extends CvTMLL {
         runDelayed(() -> {
             noisoid.removeSource(source.getId());
             source = new SquareGenerator(48000, 440);
-            source.setVolume(0.8f, 0.8f);
+            source.setAmplitude(0.8f, 0.8f);
+            noisoid.addSource(source);
+        }, delay);
+        delay += 1000;
+
+        runDelayed(() -> {
+            noisoid.removeSource(source.getId());
+            source = new WhiteNoiseGenerator(48000);
+            source.setAmplitude(0.8f, 0.8f);
             noisoid.addSource(source);
         }, delay);
         delay += 1000;
@@ -102,7 +111,7 @@ public class CvMain extends CvTMLL {
         runDelayed(() -> {
             noisoid.removeSource(source.getId());
             source = new SquareGenerator(48000, 440.00f);
-            source.setVolume(0.8f, 0.8f);
+            source.setAmplitude(0.8f, 0.8f);
             noisoid.addSource(source);
         }, delay);
         delay += 100;

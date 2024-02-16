@@ -24,22 +24,12 @@ SOFTWARE.
 
 */
 
-package com.hardcodedjoy.dev.noisoid;
+package com.hardcodedjoy.noisoid;
 
-import com.hardcodedjoy.appbase.Settings;
-import com.hardcodedjoy.appbase.activity.SingleActivity;
-import com.hardcodedjoy.appbase.contentview.CvAboutBase;
-import com.hardcodedjoy.appbase.contentview.CvSettingsBase;
-import com.hardcodedjoy.appbase.contentview.CvTM;
-import com.hardcodedjoy.noisoid.Noisoid;
+public class WhiteNoiseGenerator extends Source {
 
-public class MainActivity extends SingleActivity {
-    static {
-        setInitialCvClass(CvMain.class);
-        setSettingsClass(Settings.class);
-        CvTM.setSettingsCvClass(CvSettingsBase.class);
-        CvTM.setAboutCvClass(CvAboutBase.class);
-        CvAboutBase.setAppVersion(BuildConfig.VERSION_NAME, BuildConfig.TIMESTAMP);
-        CvAboutBase.addInfoAboutOpenSourceLib(Noisoid.about());
-    }
+    public WhiteNoiseGenerator(int sampleRate) { this.sampleRate = sampleRate; }
+
+    @Override
+    protected float getNextSample() { return ((float)Math.random() - 0.5f) * 2.0f; }
 }

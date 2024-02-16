@@ -40,8 +40,8 @@ abstract public class Source {
     protected double k;
     protected double alpha;
 
-    protected float volumeL;
-    protected float volumeR;
+    protected float amplitudeL;
+    protected float amplitudeR;
 
     public void setId(int id) { this.id = id; }
     public int getId() { return id; }
@@ -52,14 +52,14 @@ abstract public class Source {
         nextId++;
         if(nextId < 0) { nextId = 0; }
 
-        this.volumeL = 1.0f;
-        this.volumeR = 1.0f;
+        this.amplitudeL = 1.0f;
+        this.amplitudeR = 1.0f;
     }
 
-    public void setVolume(float left, float right) {
+    public void setAmplitude(float left, float right) {
         synchronized (sync) {
-            this.volumeL = left;
-            this.volumeR = right;
+            this.amplitudeL = left;
+            this.amplitudeR = right;
         }
     }
 
@@ -76,8 +76,8 @@ abstract public class Source {
         for(int i=0; i<len; ) {
             synchronized (sync) {
                 sample = getNextSample();
-                buf[offset + (i++)] += sample * volumeL; // left
-                buf[offset + (i++)] += sample * volumeR; // right
+                buf[offset + (i++)] += sample * amplitudeL; // left
+                buf[offset + (i++)] += sample * amplitudeR; // right
                 // using "+=" because we are mixing with what is already in buf
             }
         }

@@ -1,6 +1,6 @@
 # Noisoid
 
-<code>com.hardcodedjoy.noisoid</code> <code>v1.1.1</code><br/>
+<code>com.hardcodedjoy.noisoid</code> <code>v1.1.2</code><br/>
 minSdkVersion: <code>21</code><br/>
 targetSdkVersion: <code>33</code><br/>
 

@@ -54,6 +54,7 @@ public class Noisoid {
         sources = new Vector<>();
     }
 
+    @SuppressWarnings("unused")
     public int getSampleRate() { return sampleRate; }
 
     public void start() {
